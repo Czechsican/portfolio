@@ -43,12 +43,17 @@ export function ProjectDetail({ sectionId, projects }: ProjectDetailProps) {
     ...(project.links ?? []),
   ]
 
-  /** Cover first, then the extra images: the order the lightbox steps through. */
-  const gallery = [...(project.cover ? [project.cover] : []), ...(project.images ?? [])].map(
-    (image) => ({ key: image.src, src: image.src, name: image.alt }),
-  )
-  /** The cover is its own hero; the thumbnails are the images after it. */
-  const offset = project.cover ? 1 : 0
+  /**
+   * The main image first, then the rest: the order the lightbox steps through. A project with a
+   * separate `hero` keeps its card `cover` as the first thumbnail.
+   */
+  const main = project.hero ?? project.cover
+  const gallery = [
+    ...(main ? [main] : []),
+    ...(project.hero && project.cover ? [project.cover] : []),
+    ...(project.images ?? []),
+  ].map((image) => ({ key: image.src, src: image.src, name: image.alt }))
+  const offset = main ? 1 : 0
   const thumbs = gallery.slice(offset)
 
   return (
@@ -82,14 +87,14 @@ export function ProjectDetail({ sectionId, projects }: ProjectDetailProps) {
       </dl>
 
       <div className="project__media">
-        {project.cover ? (
+        {main ? (
           <button
             type="button"
             className="project__open"
             aria-label={`View ${project.title} full size`}
             onClick={() => setOpen(0)}
           >
-            <img className="cover" src={project.cover.src} alt={project.cover.alt} loading="lazy" />
+            <img className="cover" src={main.src} alt={main.alt} loading="lazy" />
           </button>
         ) : (
           <Cover project={project} channel={section.channel} />

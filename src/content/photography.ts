@@ -9,9 +9,45 @@ import canadaWorksWording from '../assets/photography/books/how-canada-works-wor
 import canadaWorksCover from '../assets/photography/books/how-canada-works-cover.jpg'
 import canadaWorksStanding from '../assets/photography/books/XVX04153.jpg'
 import canadaWorksBooth from '../assets/photography/books/XVX04108.jpg'
+import guillowPhoto from '../assets/photography/guillow/spad.jpg'
+import guillowSpad from '../assets/photography/guillow/guillow-spad.png'
+import guillowStory from '../assets/photography/guillow/guillow-100.png'
 import type { Project } from './types'
 
 export const photography: Project[] = [
+  {
+    slug: 'how-canada-works',
+    title: 'How Canada Works',
+    location: 'Vancouver, BC, Canada',
+    summary: 'A portrait of my friend Dave for the cover of Peter Mansbridge’s book.',
+    body: [
+      'I was commissioned to take a photo of my friend Dave for Peter Mansbridge’s book, and naturally I jumped at the opportunity. You might recognize Dave from the Change test press photo.',
+      'Dave works with the community in the Downtown Eastside of Vancouver, BC. I took some photos of him inside Insite, and a photo of him in an alley that ended up on the front cover.',
+      'Dave does important work, and I was happy to see him featured on the cover. I shot it all on my Sony A7 II.',
+    ],
+    tags: ['Book cover', 'Editorial'],
+    role: 'Photographer',
+    cover: {
+      src: canadaWorksWording,
+      alt: 'The title lettering of How Canada Works by Peter Mansbridge and Mark Bulgutch: white type on a red background inside a thin gold frame, under the words National Bestseller.',
+    },
+    images: [
+      {
+        src: canadaWorksCover,
+        alt: 'The cover of How Canada Works by Peter Mansbridge and Mark Bulgutch: six black and white portraits above the title on a red background.',
+      },
+      {
+        src: canadaWorksStanding,
+        alt: 'A black and white portrait of Dave, in glasses, a denim jacket and a hoodie, standing in a graffitied alley beside a wheeled oxygen cylinder.',
+      },
+      {
+        src: canadaWorksBooth,
+        alt: 'A black and white photo of Dave inside Insite, in glasses and a denim jacket, smiling and gesturing as he talks to someone in the foreground, in front of numbered booths.',
+      },
+    ],
+    url: 'https://www.simonandschuster.com/books/How-Canada-Works/Peter-Mansbridge/9781668017180',
+    urlLabel: 'View the book at Simon & Schuster',
+  },
   {
     slug: 'bethold-city',
     title: 'Berthold City',
@@ -99,36 +135,34 @@ export const photography: Project[] = [
     urlLabel: 'View the record on Discogs',
   },
   {
-    slug: 'how-canada-works',
-    title: 'How Canada Works',
-    location: 'Vancouver, BC, Canada',
-    summary: 'A portrait of my friend Dave for the cover of Peter Mansbridge’s book.',
+    slug: 'guillows-100-year',
+    title: 'Guillow’s 100 Year',
+    location: 'Wakefield, MA',
+    summary: 'The model build and photograph for Guillow’s 100 year Spad VII reissue.',
     body: [
-      'I was commissioned to take a photo of my friend Dave for Peter Mansbridge’s book, and naturally I jumped at the opportunity. You might recognize Dave from the Change test press photo.',
-      'Dave works with the community in the Downtown Eastside of Vancouver, BC. I took some photos of him inside Insite, and a photo of him in an alley that ended up on the front cover.',
-      'Dave does important work, and I was happy to see him featured on the cover. I shot it all on my Sony A7 II.',
+      'Aviation runs in my family. I come from an unbroken line of pilots, and I’ve been building model planes for most of my life.',
+      'This is a traditional stick and tissue build. The kit is an 18 inch laser cut balsa model of the Spad VII, a long out of print kit that Guillow’s brought back for their 100 year anniversary. I covered the balsa frame in tissue paper, tightened it with water, and sealed it with EZE dope. Then I airbrushed it and weathered it with oil paints and real dirt.',
+      'I modelled mine after Vieux Charles, the Spad flown by the French ace Georges Guynemer. The decals that came with the kit wouldn’t stick and kept tearing, so I improvised. I cut my own masks using the original decals as a guide, mixed my own paints, and airbrushed new roundels and markings to match the original insignia.',
+      'It was a fun build, and it paid off. I photographed it for the reissue, and that photo became the main image on the product page. My Spad turned up in their ad campaign too. Seeing a hobby I’ve had most of my life show up in someone else’s marketing is strange and wonderful, and I’m super proud of it.',
+      'Fun fact: I’m on the waiting list for gliding school to learn unpowered flight, because I don’t want to break the line of aviators in my family. Everyone else in my family has their twin engine and jet ratings, but I’m fine with gliders. None of them have their work featured on the Guillow’s website.',
     ],
-    tags: ['Book cover', 'Editorial'],
-    role: 'Photographer',
+    tags: ['Product photography'],
+    role: 'Photographer and model builder',
     cover: {
-      src: canadaWorksWording,
-      alt: 'The title lettering of How Canada Works by Peter Mansbridge and Mark Bulgutch: white type on a red background inside a thin gold frame, under the words National Bestseller.',
+      src: guillowPhoto,
+      alt: 'A hand built model of the Spad VII biplane on a pale tabletop against a dark wooden wall: weathered tan wings and fuselage, a wooden propeller, spoked black wheels and airbrushed red, white and blue roundels on the wings.',
     },
     images: [
       {
-        src: canadaWorksCover,
-        alt: 'The cover of How Canada Works by Peter Mansbridge and Mark Bulgutch: six black and white portraits above the title on a red background.',
+        src: guillowSpad,
+        alt: 'The Guillow’s Spad VII product page: a photograph of a weathered balsa wood biplane with French roundels, a gallery of thumbnails below it, the $74.99 price, an Add to Cart button and the kit details.',
       },
       {
-        src: canadaWorksStanding,
-        alt: 'A black and white portrait of Dave, in glasses, a denim jacket and a hoodie, standing in a graffitied alley beside a wheeled oxygen cylinder.',
-      },
-      {
-        src: canadaWorksBooth,
-        alt: 'A black and white photo of Dave inside Insite, in glasses and a denim jacket, smiling and gesturing as he talks to someone in the foreground, in front of numbered booths.',
+        src: guillowStory,
+        alt: 'The Share Your Guillow’s Story page: a banner with the title beside a collage of vintage photos of a man and a boy building model planes, a red model plane, and the Spad VII build in the sky.',
       },
     ],
-    url: 'https://www.simonandschuster.com/books/How-Canada-Works/Peter-Mansbridge/9781668017180',
-    urlLabel: 'View the book at Simon & Schuster',
+    url: 'https://www.guillow.com/product/spad-vii/',
+    urlLabel: 'View the kit at Guillow’s',
   },
 ]

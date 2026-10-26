@@ -21,6 +21,8 @@ export interface Project {
   tags: string[]
   /** Optional. Without a cover, a halftone placeholder is drawn. */
   cover?: Img
+  /** Optional. The main image on the project page, when it should differ from the card `cover`. */
+  hero?: Img
   /** Additional images for the project page. */
   images?: Img[]
   role?: string
