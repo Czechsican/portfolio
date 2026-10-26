@@ -1,0 +1,942 @@
+:root {
+  --paper: #eceeea;
+  --ink: #1a1e2b;
+  --ink-soft: #4a5062;
+  --cyan: #00a0c6;
+  --magenta: #e4007c;
+  --yellow: #ffd400;
+
+  --accent: var(--ink);
+
+  --font-display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  --font-text: 'Literata', Georgia, 'Times New Roman', serif;
+
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --measure: 62ch;
+}
+
+[data-channel='cyan'] {
+  --accent: var(--cyan);
+}
+[data-channel='magenta'] {
+  --accent: var(--magenta);
+}
+[data-channel='yellow'] {
+  --accent: var(--yellow);
+}
+[data-channel='ink'] {
+  --accent: var(--ink);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+h1,
+p,
+ul,
+dl,
+dd {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Skip link */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: 0;
+  padding: 0.5rem 1rem;
+  background: var(--ink);
+  color: var(--paper);
+  transform: translateY(-120%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  z-index: 10;
+}
+
+/* Header and footer */
+
+/* Short pages: the main area grows, so the footer sits at the bottom of the window. */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.main {
+  flex: 1 0 auto;
+}
+
+/* Focused by script after a route change, not a control, so no ring. */
+.main:focus {
+  outline: none;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  padding: 1.25rem var(--gutter);
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 500;
+}
+
+.header__name {
+  font-weight: 700;
+  font-stretch: 85%;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.header__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+}
+
+.header__link {
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+}
+
+.header__link:hover {
+  border-bottom-color: var(--ink);
+}
+
+.header__link[aria-current='page'] {
+  border-bottom-color: var(--ink);
+  font-weight: 700;
+}
+
+.footer {
+  padding: 3rem var(--gutter) 2rem;
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+}
+
+/* Home */
+
+.home__intro {
+  padding: 2rem var(--gutter) 2.5rem;
+}
+
+.home__name {
+  max-width: 14ch;
+  font-family: var(--font-display);
+  font-size: clamp(3.25rem, 13vw, 11rem);
+  font-weight: 800;
+  font-stretch: 75%;
+  line-height: 0.88;
+  letter-spacing: -0.035em;
+}
+
+.home__tagline {
+  margin-top: 1.5rem;
+  max-width: 34ch;
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  line-height: 1.4;
+}
+
+.panels {
+  display: flex;
+  flex-direction: column;
+}
+
+.panels__item {
+  min-width: 0;
+}
+
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 8.5rem;
+  padding: 1.25rem var(--gutter);
+  overflow: hidden;
+  background: var(--accent);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.panel[data-channel='ink'] {
+  color: var(--paper);
+}
+
+/* Halftone screen. The dots grow on hover, like a heavier ink coverage. */
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgb(26 30 43 / 0.22) var(--dot, 22%), transparent calc(var(--dot, 22%) + 1%))
+    0 0 / 16px 16px;
+  transition: background-size 0.5s ease;
+  pointer-events: none;
+}
+
+.panel[data-channel='ink']::before {
+  background-image: radial-gradient(circle, rgb(236 238 234 / 0.14) 22%, transparent 23%);
+}
+
+.panel__label,
+.panel__detail {
+  position: relative;
+}
+
+.panel__label {
+  align-self: flex-start;
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 800;
+  font-stretch: 78%;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.panel__detail {
+  max-width: 24ch;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+/* Wider screens: four panels side by side that open on hover. */
+@media (min-width: 761px) {
+  .panels {
+    flex-direction: row;
+    height: min(62vh, 36rem);
+    min-height: 22rem;
+  }
+
+  .panels__item {
+    flex: 1 1 0;
+    transition: flex-grow 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .panels__item:hover,
+  .panels__item:focus-within {
+    flex-grow: 2.6;
+  }
+
+  .panel {
+    min-height: 0;
+    padding: 1.25rem var(--gutter) 1.5rem 1.25rem;
+  }
+
+  .panels__item:hover .panel::before,
+  .panels__item:focus-within .panel::before {
+    background-size: 11px 11px;
+  }
+
+  .panel__label {
+    font-size: clamp(1.5rem, 3.4vw, 3rem);
+    /*
+     * Turned up on its side so four narrow panels still read clearly. A transform rather
+     * than writing-mode, because only a transform can animate to horizontal on hover.
+     * Pivoting on the top-left corner and shifting back by its own width keeps the
+     * turned label in the same spot, reading from the bottom up.
+     */
+    white-space: nowrap;
+    transform-origin: 0 0;
+    transform: rotate(-90deg) translateX(-100%);
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .panels__item:hover .panel__label,
+  .panels__item:focus-within .panel__label {
+    transform: none;
+  }
+
+  .panel__detail {
+    margin-top: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.15s;
+  }
+
+  .panels__item:hover .panel__detail,
+  .panels__item:focus-within .panel__detail {
+    opacity: 1;
+  }
+}
+
+/* Section and project pages */
+
+.page {
+  padding: 2rem var(--gutter) 1rem;
+}
+
+.page__title {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 9vw, 7rem);
+  font-weight: 800;
+  font-stretch: 78%;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  /* A band of the section colour sits behind the lower part of the title. */
+  background: linear-gradient(transparent 62%, var(--accent) 62%, var(--accent) 94%, transparent 94%);
+}
+
+.page[data-channel='ink'] .page__title {
+  background: none;
+}
+
+.page__intro {
+  margin-top: 1.25rem;
+  max-width: 40ch;
+  font-size: 1.25rem;
+  line-height: 1.45;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: 3rem 2rem;
+  margin-top: 3rem;
+}
+
+.card__link {
+  display: grid;
+  gap: 0.35rem;
+  text-decoration: none;
+}
+
+.card__title {
+  margin-top: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-stretch: 88%;
+  line-height: 1.15;
+}
+
+a.card__link:hover .card__title {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 4px;
+  text-underline-offset: 0.15em;
+}
+
+.card__meta {
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+}
+
+.card__summary {
+  max-width: 44ch;
+}
+
+.empty {
+  margin-top: 3rem;
+}
+
+/* Covers */
+
+.cover {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--accent);
+}
+
+.cover--placeholder {
+  background-color: var(--accent);
+  background-image: radial-gradient(circle, rgb(26 30 43 / 0.28) 30%, transparent 32%);
+  background-size: var(--dot, 12px) var(--dot, 12px);
+}
+
+[data-channel='ink'] .cover--placeholder {
+  background-image: radial-gradient(circle, rgb(236 238 234 / 0.2) 30%, transparent 32%);
+}
+
+/* Project detail */
+
+.project__back {
+  margin-bottom: 1.5rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.project__media {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.project__media .cover:first-child {
+  aspect-ratio: 16 / 9;
+}
+
+.project__open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+/* Thumbnails under the cover; each opens the lightbox. */
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.thumbs__img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: top;
+  background: var(--accent);
+}
+
+.project__open:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.project__next {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 4px solid var(--accent);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 1rem 3rem;
+  margin-top: 2rem;
+}
+
+.facts__row {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.facts dt {
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+}
+
+.facts dd {
+  font-weight: 600;
+}
+
+.facts__links a {
+  display: block;
+}
+
+.facts--stacked {
+  flex-direction: column;
+  margin-top: 0;
+}
+
+.prose {
+  margin-top: 2.5rem;
+  max-width: var(--measure);
+  line-height: 1.75;
+}
+
+.project .prose {
+  max-width: none;
+}
+
+.prose p + p {
+  margin-top: 1.25em;
+}
+
+.about figure {
+  margin: 0;
+}
+
+.about img,
+.about__hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.about figcaption,
+.about__hero figcaption {
+  margin-top: 0.5rem;
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.about__intro {
+  max-width: none;
+}
+
+.about__hero {
+  margin: 2rem 0 0;
+}
+
+.about__hero img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 50% 38%;
+}
+
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.about__aside {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 24rem;
+}
+
+.about__aside .facts {
+  margin-top: 0;
+}
+
+.about__lede {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.about__body {
+  margin-top: 1.5rem;
+}
+
+.about .about__inset {
+  max-width: 20rem;
+  margin: 1.5rem 0;
+}
+
+.about__inset + p {
+  margin-top: 1.25em;
+}
+
+/* Wider screens: a wide photo opens the page, then a narrow sticky column of portrait and
+   facts beside the story, on the right, with the tall photo set into the text. */
+@media (min-width: 900px) {
+  /* As wide as the story column below: 7 of the 12 grid columns, plus the 6 gaps between them. */
+  .about__intro {
+    max-width: calc((100% - 22rem) * 7 / 12 + 12rem);
+  }
+
+  .about__hero img {
+    aspect-ratio: 16 / 9;
+  }
+
+  .about {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .about__aside {
+    grid-column: 9 / 13;
+    grid-row: 1;
+    align-self: start;
+    position: sticky;
+    top: 2rem;
+  }
+
+  .about__main {
+    grid-column: 1 / 8;
+    grid-row: 1;
+  }
+
+  .about__body {
+    max-width: none;
+  }
+
+  /* Each paragraph is laid out beside the photo as a block, so a last line can't wrap under it. */
+  .about__body p {
+    display: flow-root;
+  }
+
+  .about .about__inset {
+    float: left;
+    width: 36%;
+    max-width: none;
+    margin: 0.4rem 2rem 1rem 0;
+  }
+}
+
+/* Reduced motion: no growth, no fades */
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox__img--loaded {
+    animation: none;
+  }
+
+  .panels__item,
+  .panel::before,
+  .panel__label,
+  .panel__detail {
+    transition: none;
+  }
+}
+
+/* Photo gallery */
+.gallery {
+  padding: 2rem 0 0;
+}
+
+.gallery__title {
+  font-family: var(--font-display);
+  margin: 0 0 1rem;
+}
+
+.gallery__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 1rem;
+}
+
+.photo {
+  margin: 0;
+}
+
+.photo__frame {
+  position: relative;
+}
+
+.photo__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 0.5rem solid #fff;
+  background: #fff;
+}
+
+.photo__img--loading {
+  /* Halftone screen, as on the project covers. */
+  background-color: var(--accent);
+  background-image: radial-gradient(circle, rgb(26 30 43 / 0.28) 30%, transparent 32%);
+  background-size: 12px 12px;
+}
+
+[data-channel='ink'] .photo__img--loading {
+  background-image: radial-gradient(circle, rgb(236 238 234 / 0.2) 30%, transparent 32%);
+}
+
+.medium {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+}
+
+.medium__label {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  background: var(--ink);
+  color: var(--paper);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  list-style: none;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.medium__label:hover,
+.medium[open] .medium__label {
+  opacity: 1;
+}
+
+.medium__label::-webkit-details-marker {
+  display: none;
+}
+
+.medium--35mm .medium__label,
+.medium__label.medium--35mm {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.medium--120mm .medium__label,
+.medium__label.medium--120mm {
+  background: var(--magenta);
+  color: var(--paper);
+}
+
+.medium--digital .medium__label,
+.medium__label.medium--digital {
+  background: var(--cyan);
+  color: var(--ink);
+}
+
+.medium__details {
+  margin: 0.25rem 0 0;
+  padding: 0.5rem 0.65rem;
+  background: var(--paper);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  min-width: 11rem;
+}
+
+.medium__details div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.medium__details dt {
+  color: var(--ink-soft);
+}
+
+.medium__details dd {
+  margin: 0;
+}
+
+.photo__open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 3.5rem 0.5rem 1rem;
+  background: rgb(26 30 43 / 0.94);
+  color: var(--paper);
+  font-family: var(--font-display);
+}
+
+.lightbox__figure {
+  margin: 0;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 0;
+}
+
+.lightbox__figure img {
+  max-width: 100%;
+  max-height: calc(100vh - 11rem);
+  object-fit: contain;
+  border: 1.25rem solid #fff;
+  background: #fff;
+}
+
+.lightbox__placeholder {
+  /* Viewport units: the frame shrink-wraps its content, so a percentage would collapse. */
+  width: min(calc(100vw - 1rem), calc((100vh - 11rem) * 1.5));
+  aspect-ratio: 3 / 2;
+  border: 1.25rem solid #fff;
+  /* Halftone screen, as on the gallery thumbnails. */
+  background-color: var(--accent);
+  background-image: radial-gradient(circle, rgb(26 30 43 / 0.28) 30%, transparent 32%);
+  background-size: 12px 12px;
+}
+
+[data-channel='ink'] .lightbox__placeholder {
+  background-image: radial-gradient(circle, rgb(236 238 234 / 0.2) 30%, transparent 32%);
+}
+
+.lightbox__img[hidden] {
+  /* The global img rule would otherwise override the hidden attribute. */
+  display: none;
+}
+
+.lightbox__img--loaded {
+  animation: lightbox-fade 0.3s ease;
+}
+
+@keyframes lightbox-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.lightbox__caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.lightbox__caption p {
+  margin: 0;
+}
+
+.lightbox__frame {
+  position: relative;
+  display: flex;
+  max-width: 100%;
+  min-height: 0;
+}
+
+/* Sits just inside the photo, past the white border. */
+.lightbox__medium {
+  position: absolute;
+  top: 1.75rem;
+  left: 1.75rem;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  cursor: default;
+  opacity: 0.9;
+}
+
+.lightbox__details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin: 0;
+}
+
+.lightbox__details div {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.lightbox__details dt {
+  opacity: 0.7;
+}
+
+.lightbox__details dd {
+  margin: 0;
+}
+
+.lightbox__count {
+  opacity: 0.7;
+}
+
+.lightbox__close,
+.lightbox__nav {
+  position: absolute;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.lightbox__close {
+  top: 1rem;
+  right: 1rem;
+  padding: 0.4rem 0.8rem;
+  border: 2px solid currentColor;
+}
+
+.lightbox__nav {
+  bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.lightbox__nav--prev {
+  left: 0.25rem;
+}
+
+.lightbox__nav--next {
+  right: 0.25rem;
+}
+
+.lightbox button:focus-visible {
+  outline: 3px solid var(--yellow);
+}
+
+@media (min-width: 601px) {
+  .lightbox {
+    padding: 3.5rem 4rem 1rem;
+  }
+
+  .lightbox__placeholder {
+    width: min(calc(100vw - 8rem), calc((100vh - 11rem) * 1.5));
+  }
+
+  .lightbox__nav {
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+  }
+}
